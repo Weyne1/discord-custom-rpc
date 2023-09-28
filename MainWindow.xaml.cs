@@ -13,6 +13,7 @@ using System.Reflection;
 using System.Threading;
 using Newtonsoft.Json;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrayNotify;
+using System.Diagnostics;
 
 namespace Discord_Custom_RPC
 {
@@ -49,7 +50,7 @@ namespace Discord_Custom_RPC
             // Элементы меню
             notifyIcon.MouseClick += OnNotifyIconClick;
             ToolStripMenuItem exitMenuItem = new ToolStripMenuItem("Exit Custom RPC");
-            
+
             exitMenuItem.Click += OnExitClick;
 
             contextMenuStrip.Items.Add(exitMenuItem);
@@ -66,7 +67,7 @@ namespace Discord_Custom_RPC
         {
             DragMove();
         }
-        
+
         // Правый клик по верхней панели - вызов контекстного меню
         private void titleBar_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -80,11 +81,11 @@ namespace Discord_Custom_RPC
             closeMenuItem.Click += OnExitClick;
             trayMenuItem.Header = "Minimize to tray";
             trayMenuItem.Click += ImageCloseClick;
-            
+
             contextMenu.Items.Add(trayMenuItem);
             contextMenu.Items.Add(separator);
             contextMenu.Items.Add(closeMenuItem);
-            
+
             contextMenu.IsOpen = true;
         }
 
@@ -178,7 +179,7 @@ namespace Discord_Custom_RPC
                 DiscordConnect discordConnect = new DiscordConnect();
                 discordConnect.Deinitialize();
 
-    });
+            });
         }
 
 
@@ -196,7 +197,7 @@ namespace Discord_Custom_RPC
             // Привязываем анимацию к RotateTransform
             rotateTransform.BeginAnimation(RotateTransform.AngleProperty, rotateAnimation);
         }
-  
+
 
         // Поле "ApplicationID"
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
@@ -224,13 +225,13 @@ namespace Discord_Custom_RPC
                     ButtonSetActivity.Content = defaultButtonContent;
                 }
             }
-                
+
             else
             {
                 TextAppIDWatermark.Opacity = 1;
                 IsButtonActive = false;
                 ButtonSetActivity.IsEnabled = false;
-            }  
+            }
         }
 
         private void TextBoxDetailsTextChanged(object sender, TextChangedEventArgs e)
@@ -252,7 +253,7 @@ namespace Discord_Custom_RPC
         {
             if (TextBoxState.Text == "")
             {
-                TextStateWatermark.Opacity = 1; 
+                TextStateWatermark.Opacity = 1;
             }
             else
             {
@@ -272,7 +273,7 @@ namespace Discord_Custom_RPC
             {
                 TextTimestampWatermark.Opacity = 0;
             }
-                
+
             ButtonCheckToEnabled();
         }
 
@@ -335,7 +336,7 @@ namespace Discord_Custom_RPC
 
         // ОКНО НАСТРОЙКИ КНОПОК
         private void ButtonSetupClick(object sender, RoutedEventArgs e)
-        { 
+        {
             addButtons = new AddButtons(this);
             addButtons.Show();
             ButtonSetup.IsEnabled = false;
@@ -354,6 +355,12 @@ namespace Discord_Custom_RPC
                 ButtonSetActivity.IsEnabled = true;
                 ButtonSetActivity.Content = defaultButtonContent;
             }
+        }
+
+        private void ButtonDevPortalClick(object sender, RoutedEventArgs e)
+        {
+            string url = "https://discord.com/developers/applications";
+            Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
         }
 
 
