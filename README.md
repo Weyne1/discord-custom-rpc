@@ -1,6 +1,11 @@
-# Discord Custom RPC for Windows
+# Discord Custom RPC Panel
 Panel for setting custom RPC for the Discord client. Supports adding buttons, 
 time, images and text to the "Playing a game" status (Windows 7 and above).
+
+<br>
+<p align="center">
+   <img src="./images/main_image.jpg" width="920">
+</p>
 
 ## Usage
 
@@ -13,8 +18,18 @@ on the Discord Developer Portal.
 2. Here you need to login your Discord account and click "New Application".
    Write a name for the application. It will be used as name of the game
    in status (you can change it at any time).
+
+<br>
+<p align="center">
+   <img src="./images/app_list.jpg" width="920">
+</p>
+
 3. Copy `Application ID` and paste into the first field in the panel.
    Now the panel will work with **your app name** and **icons**!
+<br>
+<p align="center">
+   <img src="./images/app_id.jpg" width="920">
+</p>
 
 ### Adding Icons
 
@@ -23,6 +38,12 @@ on the Discord Developer Portal.
    Each image must be assigned its own key (write any value convenient for you).
    **Note:** Discord doesn't load icons right away. You may have to wait a few minutes 
    before the icons are saves and you can use them.
+   
+<br>
+<p align="center">
+   <img src="./images/icons.jpg" width="920">
+</p>
+
 2. Copy your image key and paste into the appropriate fields. Add texts to the fields below 
    the keys ─ it will appear on cursor hover. `Large image` ─ the main big image, `Small image` 
    ─ small image on the right side (optional).
@@ -31,6 +52,10 @@ on the Discord Developer Portal.
 
 Click "Add Buttons" button on the panel. Now you can set texts and links for buttons!
 **Note:** Links must work for the buttons to appear.
+<br>
+<p align="center">
+   <img src="./images/buttons_setup.jpg" width="240">
+</p>
 
 ### Usage custom timestamps
 
