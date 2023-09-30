@@ -12,8 +12,8 @@ using System.Windows.Media;
 using System.Reflection;
 using System.Threading;
 using Newtonsoft.Json;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrayNotify;
 using System.Diagnostics;
+
 
 namespace Discord_Custom_RPC
 {
@@ -92,10 +92,10 @@ namespace Discord_Custom_RPC
 
         private void ReadJsonData()
         {
-            TextBoxAppID.Text = ReadJsonValue("applicationId");
+            TextBoxAppID.Text = Regex.Replace(ReadJsonValue("applicationId"), "[^0-9]", "");
             TextBoxDetails.Text = ReadJsonValue("details");
             TextBoxState.Text = ReadJsonValue("state");
-            TextBoxTimestamp.Text = ReadJsonValue("timestamp");
+            TextBoxTimestamp.Text = Regex.Replace(ReadJsonValue("timestamp"), "[^0-9]", "");
             TextBoxLargeImageKey.Text = ReadJsonValue("largeImageKey");
             TextBoxLargeImageText.Text = ReadJsonValue("largeImageText");
             TextBoxSmallImageKey.Text = ReadJsonValue("SmallImageKey");
@@ -183,7 +183,7 @@ namespace Discord_Custom_RPC
         }
 
 
-        private void ImageMouseRotation(object sender, MouseButtonEventArgs e)
+        private async void ImageMouseRotation(object sender, MouseButtonEventArgs e)
         {
             // Анимация вращения
             var rotateAnimation = new DoubleAnimation
@@ -194,8 +194,14 @@ namespace Discord_Custom_RPC
                 EasingFunction = new QuadraticEase(),
             };
 
-            // Привязываем анимацию к RotateTransform
-            rotateTransform.BeginAnimation(RotateTransform.AngleProperty, rotateAnimation);
+            // Запуск анимации в фоновом потоке
+            await Task.Run(() =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    rotateTransform.BeginAnimation(RotateTransform.AngleProperty, rotateAnimation);
+                });
+            });
         }
 
 
@@ -213,6 +219,7 @@ namespace Discord_Custom_RPC
         private void TextBoxAppIDTextChanged(object sender, TextChangedEventArgs e)
         {
             bool isWhitespace = TextBoxAppID.Text.Trim().Length == 0;
+            TextBoxAppID.Text = Regex.Replace(TextBoxAppID.Text, "[^0-9]", "");
 
             if (TextBoxAppID.Text != "")
             {
@@ -265,6 +272,8 @@ namespace Discord_Custom_RPC
 
         private void TextBoxTimestampTextChanged(object sender, TextChangedEventArgs e)
         {
+            TextBoxTimestamp.Text = Regex.Replace(TextBoxTimestamp.Text, "[^0-9]", "");
+
             if (TextBoxTimestamp.Text == "")
             {
                 TextTimestampWatermark.Opacity = 1;
@@ -414,7 +423,11 @@ namespace Discord_Custom_RPC
                 buttonSText = buttonSText,
                 buttonSLink = buttonSLink
             };
-     
+
+            // Перезапись файла
+            string updatedJson = JsonConvert.SerializeObject(configData, Formatting.Indented);
+            File.WriteAllText(jsonFilePath, updatedJson);
+
 
             if (isStatusSet) 
             {
@@ -440,11 +453,6 @@ namespace Discord_Custom_RPC
                 buttonSText,
                 buttonSLink
                 );
-            
-
-            // Перезапись файла
-            string updatedJson = JsonConvert.SerializeObject(configData, Formatting.Indented);
-            File.WriteAllText(jsonFilePath, updatedJson);
         }
 
 

@@ -11,7 +11,7 @@ namespace Discord_Custom_RPC
         {
             base.OnStartup(e);
 
-            // Проверка, запущен ли Discord и запуск
+            // Проверка, запущен ли Discord. Запуск панели
             if (IsDiscordRunning())
             {
                 DiscordConnect discordConnect = new DiscordConnect();
@@ -47,7 +47,7 @@ namespace Discord_Custom_RPC
             else
             {
                 // Вывод уведомления и закрытие приложения
-                MessageBox.Show("Please open Discord first before launching the panel.", "Discord Not Open", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Please open Discord Client first before launching the panel.", "Discord Not Open", MessageBoxButton.OK, MessageBoxImage.Information);
                 Shutdown();
             }
         }

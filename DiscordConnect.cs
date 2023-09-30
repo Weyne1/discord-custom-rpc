@@ -76,9 +76,9 @@ namespace Discord_Custom_RPC
             if (largeImageKey == "" || largeImageKey?.Trim().Length == 0)
                 largeImageKey = null;
             if (largeImageText == "" || largeImageText?.Trim().Length == 0)
-                largeImageText = null;
+                largeImageText = "Image";
             if (smallImageKey == "" || smallImageKey?.Trim().Length == 0)
-                smallImageKey = null;
+                smallImageKey = "Small image";
             if (smallImageText == "" || smallImageText?.Trim().Length == 0)
                 smallImageText = null;
 
@@ -101,8 +101,13 @@ namespace Discord_Custom_RPC
             }
 
             // Работа с кнопками
-            if ((buttonFText != "" || buttonFText?.Trim().Length != 0) && (Uri.TryCreate(buttonFLink, UriKind.Absolute, out Uri? uriResult) && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps)))
+            if (Uri.TryCreate(buttonFLink, UriKind.Absolute, out Uri? uriResult) && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps))
             {
+                if (buttonFText == "" || buttonFText?.Trim().Length == 0)
+                {
+                    buttonFText = "Button 1";
+                }
+
                 button1 = new DiscordRPC.Button
                 {
                     Label = buttonFText,
@@ -111,8 +116,13 @@ namespace Discord_Custom_RPC
                 isFirstButtonActive = true;
             }
                 
-            if ((buttonSText != "" || buttonSText?.Trim().Length != 0) && (Uri.TryCreate(buttonSLink, UriKind.Absolute, out Uri? uriResult2) && (uriResult2.Scheme == Uri.UriSchemeHttp || uriResult2.Scheme == Uri.UriSchemeHttps)))
+            if (Uri.TryCreate(buttonSLink, UriKind.Absolute, out Uri? uriResult2) && (uriResult2.Scheme == Uri.UriSchemeHttp || uriResult2.Scheme == Uri.UriSchemeHttps))
             {
+                if (buttonSText == "" || buttonSText?.Trim().Length == 0)
+                {
+                    buttonSText = "Button 2";
+                }
+
                 button2 = new DiscordRPC.Button
                 {
                     Label = buttonSText,
