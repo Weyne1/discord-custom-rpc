@@ -38,7 +38,7 @@ namespace Discord_Custom_RPC
                 {
                     try
                     {
-                        Directory.CreateDirectory(Path.Combine(appDataFolder, "Discord Custom RPC"));
+                        Directory.CreateDirectory(appDataFolder);
                         File.Copy(sourceIconPath, iconFilePath);
                         File.Delete(sourceIconPath);
                         logger.Log("Successful copying of tray icon in AppData folder");
