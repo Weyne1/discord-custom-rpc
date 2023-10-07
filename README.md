@@ -16,7 +16,7 @@ on the Discord Developer Portal.
 
 1. Run the panel and click "Developer Portal" button (or click [here](https://discord.com/developers/applications)).
 2. Here you need to login your Discord account and click "New Application".
-   Write a name for the application. It will be used as name of the game
+   Write a name for the app. It will be used as name of the game
    in status (you can change it at any time).
 
 <br>
@@ -44,13 +44,13 @@ on the Discord Developer Portal.
    <img src="./images/icons.jpg" width="920">
 </p>
 
-2. Copy your image key and paste into the appropriate fields. Add texts to the fields below 
+2. Copy your image key and paste into the appropriate fields. Add text to the fields below 
    the keys ─ it will appear on cursor hover. `Large image` ─ the main big image, `Small image` 
    ─ small image on the right side (optional).
 
 ### Adding buttons
 
-Click "Add Buttons" button on the panel. Now you can set texts and links for buttons!
+Click "Add Buttons" button on the panel. Now you can set text and links for buttons!
 **Note:** Links must work for the buttons to appear.
 <br>
 <p align="center">
@@ -60,7 +60,7 @@ Click "Add Buttons" button on the panel. Now you can set texts and links for but
 ### Usage custom timestamps
 
 By default, the game time in status starts from `0:00`, but `Custom timestamp` field can change it.
-The field accepts a Unix numeric value. You can use [generator](https://www.unixtimestamp.com/) to set a custom time. It's fun :D
+Field accepts a Unix numeric value. You can use [generator](https://www.unixtimestamp.com/) to set a custom time. It's fun :D
 
 ## Conclusion
 
