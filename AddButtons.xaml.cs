@@ -1,20 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.IO;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Forms.VisualStyles;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Discord_Custom_RPC
 {
@@ -23,39 +12,40 @@ namespace Discord_Custom_RPC
     /// </summary>
     public partial class AddButtons : Window
     {
-        private MainWindow? mainWindow;
+        private readonly MainWindow? mainWindow;
+
+        private static readonly string directoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Discord Custom RPC");
+        private static readonly string jsonFilePath = Path.Combine(directoryPath, "lastConfig.json");
+
+        #region -- Параметры окна --
 
         public AddButtons(MainWindow main)
         {
             InitializeComponent();
-            ReadJsonData();
+            ReadJsonButtonsData();
             mainWindow = main;
         }
 
-        private void titleBarButtons_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void TitleBarButtons_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
         }
 
-        // Обработчик закрытия неосновного окна
-        private void AddButtons_Closing(object sender, EventArgs e)
+        #endregion
+
+
+        #region -- JSON --
+
+        private void ReadJsonButtonsData()
         {
-            // Активирует кнопку на основном окне при закрытии
-            mainWindow?.ActivateButtonOnMainWindow();
+            TextBoxButton1Text.Text = ReadJsonValue("ButtonFText");
+            TextBoxButton1Link.Text = ReadJsonValue("ButtonFLink");
+            TextBoxButton2Text.Text = ReadJsonValue("ButtonSText");
+            TextBoxButton2Link.Text = ReadJsonValue("ButtonSLink");
         }
 
-        private void ReadJsonData()
-        {
-            TextBoxButton1Text.Text = ReadJsonValue("buttonFText");
-            TextBoxButton1Link.Text = ReadJsonValue("buttonFLink");
-            TextBoxButton2Text.Text = ReadJsonValue("buttonSText");
-            TextBoxButton2Link.Text = ReadJsonValue("buttonSLink");
-        }
-
-        // ЧТЕНИЕ JSON
         private static string ReadJsonValue(string propertyName)
         {
-            string jsonFilePath = "lastConfig.json";
 
             if (File.Exists(jsonFilePath))
             {
@@ -73,9 +63,10 @@ namespace Discord_Custom_RPC
             return "";
         }
 
+        #endregion
 
-        // ВЗАИМОДЕЙСТВИЯ С ПОЛЯМИ
 
+        #region -- Взаимодействие с полями --
 
         private void TextBoxButton1TextChanged(object sender, RoutedEventArgs e)
         {
@@ -125,56 +116,28 @@ namespace Discord_Custom_RPC
             }
         }
 
+        #endregion
 
-        // НАЖАТИЕ НА КНОПКУ "SAVE"
+
+        #region -- Нажатие на кнопку "Save" --
 
         private void ButtonSaveClick(object sender, RoutedEventArgs e)
         {
-            string jsonFilePath = "lastConfig.json";
-
-            LastConfigData configData = new LastConfigData
+            LastConfigData configData = new()
             {
-                applicationId = "",
-                details = "",
-                state = "",
-                timestamp = "",
-                largeImageKey = "",
-                largeImageText = "",
-                smallImageKey = "",
-                smallImageText = "",
-                buttonFText = "",
-                buttonFLink = "",
-                buttonSText = "",
-                buttonSLink = ""
-            };
-
-            string applicationId = ReadJsonValue("applicationId");
-            string details = ReadJsonValue("details");
-            string state = ReadJsonValue("state");
-            string timestamp = ReadJsonValue("timestamp");
-            string largeImageKey = ReadJsonValue("largeImageKey");
-            string largeImageText = ReadJsonValue("largeImageText");
-            string smallImageKey = ReadJsonValue("smallImageKey");
-            string smallImageText = ReadJsonValue("smallImageText");
-            string buttonFText = TextBoxButton1Text.Text;
-            string buttonFLink = TextBoxButton1Link.Text;
-            string buttonSText = TextBoxButton2Text.Text;
-            string buttonSLink = TextBoxButton2Link.Text;
-
-            configData = new LastConfigData
-            {
-                applicationId = applicationId,
-                details = details,
-                state = state,
-                timestamp = timestamp,
-                largeImageKey = largeImageKey,
-                largeImageText = largeImageText,
-                smallImageKey = smallImageKey,
-                smallImageText = smallImageText,
-                buttonFText = TextBoxButton1Text.Text,
-                buttonFLink = TextBoxButton1Link.Text,
-                buttonSText = TextBoxButton2Text.Text,
-                buttonSLink = TextBoxButton2Link.Text
+                ApplicationId = ReadJsonValue("ApplicationId"),
+                Details = ReadJsonValue("Details"),
+                State = ReadJsonValue("State"),
+                Timestamp = ReadJsonValue("Timestamp"),
+                LargeImageKey = ReadJsonValue("LargeImageKey"),
+                LargeImageText = ReadJsonValue("LargeImageText"),
+                SmallImageKey = ReadJsonValue("SmallImageKey"),
+                SmallImageText = ReadJsonValue("SmallImageText"),
+                ButtonFText = TextBoxButton1Text.Text,
+                ButtonFLink = TextBoxButton1Link.Text,
+                ButtonSText = TextBoxButton2Text.Text,
+                ButtonSLink = TextBoxButton2Link.Text,
+                Autostart = ReadJsonValue("Autostart"),
             };
 
             string updatedJson = JsonConvert.SerializeObject(configData, Formatting.Indented);
@@ -184,10 +147,19 @@ namespace Discord_Custom_RPC
             Close();
         }
 
+        #endregion
 
 
-    // Закрытие окна
-    private void ImageCloseClick(object? sender, EventArgs e)
+        #region -- Закрытие окна --
+
+        // Обработчик закрытия неосновного окна
+        private void AddButtons_Closing(object sender, EventArgs e)
+        {
+            // Активирует кнопку на основном окне при закрытии
+            mainWindow?.ActivateButtonOnMainWindow();
+        }
+
+        private void ImageCloseClick(object? sender, EventArgs e)
         {
             Close();
         }
@@ -203,9 +175,7 @@ namespace Discord_Custom_RPC
             RedSquare.Opacity = 0;
         }
 
-        private void TextBoxLargeImageKey_TextChanged(object sender, TextChangedEventArgs e)
-        {
+        #endregion
 
-        }
     }
 }
