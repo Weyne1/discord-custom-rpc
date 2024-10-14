@@ -1,6 +1,6 @@
 # Discord Custom RPC Panel
 Panel for setting custom RPC for the Discord client. Supports adding buttons, 
-time, images and text to the "Playing a game" status (Windows 7 and above).
+time, images and text to the "Playing a game" status.
 
 <br>
 <p align="center">
